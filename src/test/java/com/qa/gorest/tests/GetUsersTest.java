@@ -30,11 +30,11 @@ public class GetUsersTest extends BaseTest{
 	 Response res = restClient.get(GOREST_ENPOINT,true, true);
 	 Assert.assertEquals(res.getStatusCode(), APIHttpStatus.OK_200.getCode());
 	 
-	 JsonPathValidator js = new JsonPathValidator();
-	 List<Integer> ids= js.readList(res, "$.[?id]");
-	 for (Integer integer : ids) {
-		System.out.println(integer);
-	}
+//	 JsonPathValidator js = new JsonPathValidator();
+//	 List<Integer> ids= js.readList(res, "$.[?id]");
+//	 for (Integer integer : ids) {
+//		System.out.println(integer);
+//	}
 	}
 	
 	@Test
