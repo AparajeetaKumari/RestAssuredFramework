@@ -7,8 +7,13 @@ import java.util.Map;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.qa.gorest.base.BaseTest;
 import com.qa.gorest.constants.APIHttpStatus;
+import com.qa.gorest.pojo.User;
 import com.qa.gorest.restclient.RestClient;
 import com.qa.gorest.utils.JsonPathValidator;
 
@@ -29,12 +34,17 @@ public class GetUsersTest extends BaseTest{
 	public void getAllUsers() {	
 	 Response res = restClient.get(GOREST_ENPOINT,true, true);
 	 Assert.assertEquals(res.getStatusCode(), APIHttpStatus.OK_200.getCode());
-	 
-//	 JsonPathValidator js = new JsonPathValidator();
-//	 List<Integer> ids= js.readList(res, "$.[?id]");
-//	 for (Integer integer : ids) {
-//		System.out.println(integer);
-//	}
+	 ObjectMapper om = new ObjectMapper();
+	 try {
+		User deserializedUser = om.readValue(res.getBody().toString(), User.class);
+		System.out.println("deserializedUser"+deserializedUser.getEmail());
+	} catch (JsonMappingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (JsonProcessingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 	}
 	
 	@Test
