@@ -73,7 +73,7 @@ pipeline
         
     
   
-		stage('Regression API Automation Tests'){
+		stage('Sanity API Automation Tests'){
             steps{
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
                     git 'https://github.com/AparajeetaKumari/RestAssuredFramework.git'
