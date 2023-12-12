@@ -2,16 +2,10 @@ pipeline
 {
     agent any
     
-    tools{
+   tools{
     	maven 'maven'
         }
-        
-    environment{
-   
-        BUILD_NUMBER = "${BUILD_NUMBER}"
-   
-    }
-    
+
 
     stages 
     {
