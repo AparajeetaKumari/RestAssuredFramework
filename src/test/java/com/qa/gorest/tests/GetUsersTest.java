@@ -49,7 +49,7 @@ public class GetUsersTest extends BaseTest{
 	
 	@Test
 	public void getSpecificUser() {
-	restClient.get(GOREST_ENPOINT+"/5822022", true,true).then().log().all().assertThat().statusCode(APIHttpStatus.OK_200.getCode()).and().body("id", equalTo(5822022));
+	restClient.get(GOREST_ENPOINT+"/5828433", true,true).then().log().all().assertThat().statusCode(APIHttpStatus.OK_200.getCode()).and().body("id", equalTo(5828433));
 		
 		
 	}
