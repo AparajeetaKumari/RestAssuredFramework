@@ -46,13 +46,22 @@ pipeline
       stage('Run Docker Image with Regression Tests') {
     steps {
         script {
-           def exitCode = sh{script: "docker run --name apitesting{BUILD_NUMBER} -e MAVEN_OPTS='-Dsurefire.suiteXmlFiles=src/test/resource/testrunners/testng.xml'
-           if(exitCode !=0){
-           currentBuild.result = 'FAILURE'
-           }
-           sh "docker start apitesting{BUILD_NUMBER}"
-           sh "docker cp apitesting${BUILD_NUMBER}:/app/target/APIExecutionReport.html ${WORKSPACE}/target"
-           sh "docker rm -f apitesting${BUILD_NUMBER}"
+           def suiteXmlFilePath = 'src/test/resources/testrunners/testng_regression.xml'
+            def dockerCommand = """
+                docker run --name apitesting${BUILD_NUMBER} \
+                -v "${WORKSPACE}/reports:/app/reports" \
+                naveenkhunteta/apitestnewone:latest \
+                /bin/bash -c "mvn test -Dsurefire.suiteXmlFiles=${suiteXmlFilePath}"
+            """
+            
+            def exitCode = bat(script: dockerCommand, returnStatus: true)
+            
+            if (exitCode != 0) {
+                currentBuild.result = 'FAILURE'
+            }
+            sh "docker start apitesting${BUILD_NUMBER}"
+            sh "docker cp apitesting${BUILD_NUMBER}:/app/target/APIExecutionReport.html ${WORKSPACE}/target"
+            sh "docker rm -f apitesting${BUILD_NUMBER}"
         }
     }
 }
