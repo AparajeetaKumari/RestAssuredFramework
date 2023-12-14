@@ -3,7 +3,7 @@ pipeline
     agent any
     
     tools{
-    	maven 'maven'
+    	maven 'MAVEN_HOME'
         }
         
     environment{
@@ -50,7 +50,7 @@ pipeline
             def dockerCommand = """
                 docker run --name apitesting${BUILD_NUMBER} \
                 -v "${WORKSPACE}/reports:/app/reports" \
-                naveenkhunteta/apitestnewone:latest \
+                aparajeetabiswas/apitestnewone:latest \
                 /bin/bash -c "mvn test -Dsurefire.suiteXmlFiles=${suiteXmlFilePath}"
             """
             
