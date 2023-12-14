@@ -47,12 +47,12 @@ pipeline
     steps {
         script {
            def suiteXmlFilePath = 'src/test/resources/testrunners/testng_regression.xml'
-            def dockerCommand = """
+            def dockerCommand = "
                 docker run --name apitesting${BUILD_NUMBER} \
                 -v "${WORKSPACE}/reports:/app/reports" \
                 naveenkhunteta/apitestnewone:latest \
                 /bin/bash -c "mvn test -Dsurefire.suiteXmlFiles=${suiteXmlFilePath}"
-            """
+            "
             
             def exitCode = bat(script: dockerCommand, returnStatus: true)
             
